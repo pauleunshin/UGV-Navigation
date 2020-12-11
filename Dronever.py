@@ -1,26 +1,27 @@
-print("Start simulator (SITL)")
-import dronekit_sitl
-sitl = dronekit_sitl.start_default()
-connection_string = sitl.connection_string()
+from dronekit import connect, VehicleMode, LocationGlobalRelative, Command, LocationGlobal
+from pymavlink import mavutil
 
-# Import DroneKit-Python
-from dronekit import connect, VehicleMode
 
-# Connect to the Vehicle.
-print("Connecting to vehicle on: %s" % (connection_string,))
-vehicle = connect(connection_string, wait_ready=True)
+#Arms Rover to Move at altitude of sea level
+def arm(altitude):
 
-# Get some vehicle attributes (state)
-print("Get some vehicle attribute values:")
-print(" GPS: %s" % vehicle.gps_0)
-print(" Battery: %s" % vehicle.battery)
-print(" Last Heartbeat: %s" % vehicle.last_heartbeat)
-print(" Is Armable?: %s" % vehicle.is_armable)
-print(" System status: %s" % vehicle.system_status.state)
-print(" Mode: %s" % vehicle.mode.name)  # settable
+def clearmission(rover):
+    cmds = rover.commands
+    cmds.clear()
+    rover.flush()
 
-# Close vehicle object before exiting script
-vehicle.close()
+    cmds.download()
+    cmds.wait_read()
 
-# Shut down simulator
-sitl.stop()
+def download_mission(rover):
+    cmds = rover.commands
+    cmds.download()
+    cmds.wait_read()
+
+def get_mission(rover):
+    #--- Downloads mission#
+    print("Downloading Mission")
+    missionlist = []
+    n_wp = 0
+
+    for wp in
