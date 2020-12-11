@@ -20,12 +20,14 @@ for i in range(N):
 
 boundary = mavwp.MAVFenceLoader()
 seq2 = 1
-for i in range(M):
+for p in range(M):
     boundary.add(mavutil.mavlink.MAVLink_mission_item_message(master.target_system,
                                                               master.target_component,
                                                               seq2,
                                                               frame,
                                                               mavutil.mavlink.MAVLink_fence_point_message()
+
+fencestatus = MAV_CMD_SET_MESSAGE_INTERVAL
 
 master.waypoint_clear_all_send()
 master.waypoint_count_send(wp.count())
