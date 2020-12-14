@@ -23,5 +23,3 @@ def get_mission(rover):
     print("Downloading Mission")
     missionlist = []
     n_wp = 0
-
-    for wp in

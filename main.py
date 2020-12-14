@@ -25,9 +25,12 @@ for p in range(M):
                                                               master.target_component,
                                                               seq2,
                                                               frame,
-                                                              mavutil.mavlink.MAVLink_fence_point_message()
+                                                              mavutil.mavlink.MAVLink_fence_point_message(status),
+                                                              0, 0 , 0, radius, 0, 0,
+                                                              lat[p], lon[p], alt[p]))
+    seq2 += 1
 
-fencestatus = MAV_CMD_SET_MESSAGE_INTERVAL
+
 
 master.waypoint_clear_all_send()
 master.waypoint_count_send(wp.count())
