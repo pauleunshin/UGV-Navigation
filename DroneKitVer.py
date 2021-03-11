@@ -3,32 +3,38 @@ from pymavlink import mavutil
 import time
 import argparse
 
-#Connect to rover
+# Connect to rover
 parser = argparse.ArgumentParser(description='Commands vehicle using vehicle.simple_goto.')
 parser.add_argument('--connect',
                     help="Vehicle connection target string. If not specified, SITL automatically started and used.")
 args = parser.parse_args()
 connection_string = args.connect
 
-
-#SITL -- Comment out if connecting to actual UGV
+# SITL -- Comment out if connecting to actual UGV
 import dronekit_sitl
-sitl=dronekit_sitl_start_default()
-connection_string=sitl.connection_string()
+
+sitl = dronekit_sitl_start_default()
+connection_string = sitl.connection_string()
 
 print("Connecting to UGV")
 vehicle.connect(connection_string, wait_ready=True)
 
 
+# Rover establishing
 
-#Arms Rover to Move at altitude of sea level
-def arm(altitude):
-    print("Arming motors")
 
+
+# Functions
+def arm():
     while not vehicle.is_armable:
+        print("Waiting to become armable")
         time.sleep(1)
 
-    vehicle.mode =
+    print("Motors armed")
+    vehicle.armed = True
+
+    return None
+
 
 def clearmission(rover):
     cmds = rover.commands
@@ -38,13 +44,21 @@ def clearmission(rover):
     cmds.download()
     cmds.wait_read()
 
+
 def download_mission(rover):
     cmds = rover.commands
     cmds.download()
     cmds.wait_read()
 
+
 def get_mission(rover):
-    #--- Downloads mission#
+    # --- Downloads mission#
     print("Downloading Mission")
     missionlist = []
     n_wp = 0
+
+# Vehicle Execution
+vehicle = connectMyCopter()
+arm()
+print("End of Script")
+
