@@ -1,6 +1,7 @@
 from dronekit import connect, VehicleMode, LocationGlobalRelative, Command, LocationGlobal
 from pymavlink import mavutil
-
+import time
+import argparse
 
 #Connect to rover
 parser = argparse.ArgumentParser(description='Commands vehicle using vehicle.simple_goto.')
@@ -22,6 +23,12 @@ vehicle.connect(connection_string, wait_ready=True)
 
 #Arms Rover to Move at altitude of sea level
 def arm(altitude):
+    print("Arming motors")
+
+    while not vehicle.is_armable:
+        time.sleep(1)
+
+    vehicle.mode =
 
 def clearmission(rover):
     cmds = rover.commands
