@@ -20,10 +20,6 @@ print("Connecting to UGV")
 vehicle.connect(connection_string, wait_ready=True)
 
 
-# Rover establishing
-
-
-
 # Functions
 def arm():
     while not vehicle.is_armable:
