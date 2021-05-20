@@ -84,7 +84,7 @@ def download_mission(rover):
 
 def adds_square_mission(aLocation, aSize):
     """
-    Adds a takeoff command and four waypoint commands to the current mission.
+    Adds a waypoint command to the current mission.
     The waypoints are positioned to form a square of side length 2*aSize around the specified LocationGlobal (aLocation).
 
     The function assumes vehicle.commands matches the vehicle mission state
