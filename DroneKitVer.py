@@ -1,6 +1,8 @@
 from dronekit import connect, VehicleMode, LocationGlobalRelative, Command, LocationGlobal
 from pymavlink import mavutil
 import time
+import socket
+import exceptions
 import argparse
 
 # Connect to rover
@@ -28,6 +30,9 @@ def arm():
 
     print("Motors armed")
     vehicle.armed = True
+    while vehicle.armed==False:
+        print("Waiting for drone to arm")
+        time.sleep(1)
 
     return None
 
