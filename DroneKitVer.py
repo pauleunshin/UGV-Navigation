@@ -27,20 +27,6 @@ print('Connecting to vehicle on: %s' % connection_string)
 vehicle = connect(connection_string, wait_ready=True)
 
 # Functions
-def arm():
-    while not vehicle.is_armable:
-        print("Waiting to become armable")
-        time.sleep(1)
-
-    print("Motors armed")
-    vehicle.armed = True
-    while vehicle.armed==False:
-        print("Waiting for drone to arm")
-        time.sleep(1)
-
-    return None
-
-
 def clearmission(rover):
     cmds = rover.commands
     cmds.clear()
@@ -132,8 +118,40 @@ def adds_square_mission(aLocation, aSize):
     cmds.upload()
 
 
+def arm():
+    while not vehicle.is_armable:
+        print("Waiting to become armable")
+        time.sleep(1)
+
+    print("Motors armed")
+    vehicle.armed = True
+    vehicle.mode = VehicleMode("GUIDED")
+
+    while vehicle.armed==False:
+        print("Waiting for drone to arm")
+        time.sleep(1)
+
+    return None
+
+print("Adding mission for current lcoation")
+adds_square_mission(vehicle.location.global_frame,50)
+
 # Vehicle Execution
 vehicle = connectMyCopter()
 arm()
+vehicle.commands.next=0
+vehicle.mode = VehicleMode("Auto")
 print("End of Script")
+
+print("Waypoint monitoring")
+while True:
+    nextwaypoint = vehicle.commands.next
+    print('Distance to waypoint (%s): %s' % (nextwaypoint, distance_to_current_waypoint()))
+
+    if nextwaypoint == 2:  # Dummy waypoint - as soon as we reach waypoint 4 this is true and we exit.
+        print("Exit 'standard' mission when start heading to dummy waypoint")
+        break;
+    time.sleep(1)
+
+
 
